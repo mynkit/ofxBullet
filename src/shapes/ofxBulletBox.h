@@ -25,6 +25,7 @@ public:
     void    removeShape();
 	
 	void	draw();
+    void    draw(glm::vec3 a_loc);
 	
 	// GETTERS //
 	glm::vec3	getSize() const;
@@ -32,6 +33,7 @@ public:
     float   getHeight() const;
     float   getDepth() const;
 	bool	isInside(const glm::vec3& a_pt, float tolerance=0.1f);
+    glm::vec3    first_a_loc;
 	
 protected:
 	

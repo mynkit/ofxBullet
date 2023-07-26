@@ -34,12 +34,14 @@ void ofxBulletBox::init( btBoxShape* a_colShape ) {
 
 //--------------------------------------------------------------
 void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+    first_a_loc = a_loc;
 	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
 	create( a_world, tr, a_mass, a_sizeX, a_sizeY, a_sizeZ );
 }
 
 //--------------------------------------------------------------
 void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+    first_a_loc = a_loc;
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
 	tr.setRotation( btQuaternion(a_rot.x, a_rot.y, a_rot.z, a_rot.w ) );
 	
@@ -77,6 +79,19 @@ void ofxBulletBox::draw() {
 	glm::vec3 size = getSize();
     ofDrawBox(0, 0, 0, size.x, size.y, size.z);
 	restoreTransformGL();
+}
+
+//--------------------------------------------------------------
+void ofxBulletBox::draw(glm::vec3 a_loc) {
+    if(!_bCreated || _rigidBody == NULL) {
+        ofLog(OF_LOG_WARNING, "ofxBulletBox :: draw : must call create() first and add() after");
+        return;
+    }
+    
+    transformGL();
+    glm::vec3 size = getSize();
+    ofDrawBox(a_loc.x-first_a_loc.x, a_loc.y-first_a_loc.y, a_loc.z-first_a_loc.z, size.x, size.y, size.z);
+    restoreTransformGL();
 }
  
 //--------------------------------------------------------------
