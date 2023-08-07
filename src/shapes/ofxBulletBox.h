@@ -25,7 +25,7 @@ public:
     void    removeShape();
 	
 	void	draw();
-    void    draw(glm::vec3 a_loc);
+    void    draw(glm::vec3 a_loc, float roll, float pitch, float yaw);
 	
 	// GETTERS //
 	glm::vec3	getSize() const;

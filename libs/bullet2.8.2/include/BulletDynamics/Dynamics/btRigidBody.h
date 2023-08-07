@@ -21,6 +21,9 @@ subject to the following restrictions:
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 class btCollisionShape;
 class btMotionState;
 class btTypedConstraint;
@@ -386,6 +389,27 @@ public:
 	{
 		m_worldTransform.getOrigin() += v; 
 	}
+
+    void setRotate(float roll, float pitch, float yaw)
+    {
+        roll = fmod(roll, 2.*M_PI);
+        if (roll<0){roll+=2.*M_PI;}
+        if (roll>=5.*M_PI/3.){roll-=2.*M_PI;}
+        pitch = fmod(pitch, 2.*M_PI);
+        if (pitch<0){pitch+=2.*M_PI;}
+        if (pitch>=5.*M_PI/3.){pitch-=2.*M_PI;}
+        yaw = fmod(yaw, 2.*M_PI);
+        if (yaw<0){yaw+=2.*M_PI;}
+        if (yaw>=5.*M_PI/3.){yaw-=2.*M_PI;}
+        
+        btQuaternion q = m_worldTransform.getRotation();
+        m_worldTransform.setRotation(q+btQuaternion(
+                                                    cos(yaw/2.)*cos(pitch/2.)*cos(roll/2.)+sin(pitch/2.)*sin(pitch/2.)*sin(roll/2.),
+                                                    sin(yaw/2.)*cos(pitch/2.)*cos(roll/2.)-cos(yaw/2.)*sin(pitch/2.)*sin(roll/2.),
+                                                    cos(yaw/2.)*sin(pitch/2.)*cos(roll/2.)+sin(yaw/2.)*cos(pitch/2.)*sin(roll/2.),
+                                                    cos(yaw/2.)*cos(pitch/2.)*sin(roll/2.)-sin(yaw/2.)*sin(pitch/2.)*cos(roll/2.)
+                                                    ));
+    }
 
 	
 	void	getAabb(btVector3& aabbMin,btVector3& aabbMax) const;
