@@ -101,12 +101,12 @@ void ofxBulletBox::draw(glm::vec3 a_loc, float roll, float pitch, float yaw) {
     transformGL();
     glm::vec3 size = getSize();
     ofPushMatrix();
-    ofTranslate(a_loc.x-first_a_loc.x, a_loc.y-first_a_loc.y);
+    ofTranslate(a_loc.x-first_a_loc.x, a_loc.y-first_a_loc.y, a_loc.z-first_a_loc.z);
     ofRotateXRad(-roll);
     ofRotateYRad(-pitch);
     ofRotateZRad(yaw);
 //    ofDrawBox(a_loc.x-first_a_loc.x, a_loc.y-first_a_loc.y, a_loc.z-first_a_loc.z, size.x, size.y, size.z);
-    ofDrawBox(0, 0, a_loc.z-first_a_loc.z, size.x, size.y, size.z);
+    ofDrawBox(0, 0, 0, size.x, size.y, size.z);
     ofPopMatrix();
     restoreTransformGL();
 }
