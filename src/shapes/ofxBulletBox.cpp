@@ -88,16 +88,6 @@ void ofxBulletBox::draw(glm::vec3 a_loc, float roll, float pitch, float yaw) {
         return;
     }
     
-    roll = fmod(roll, 2.*M_PI);
-    if (roll<0){roll+=2.*M_PI;}
-    if (roll>=5.*M_PI/3.){roll-=2.*M_PI;}
-    pitch = fmod(pitch, 2.*M_PI);
-    if (pitch<0){pitch+=2.*M_PI;}
-    if (pitch>=5.*M_PI/3.){pitch-=2.*M_PI;}
-    yaw = fmod(yaw, 2.*M_PI);
-    if (yaw<0){yaw+=2.*M_PI;}
-    if (yaw>=5.*M_PI/3.){yaw-=2.*M_PI;}
-    
     transformGL();
     glm::vec3 size = getSize();
     ofPushMatrix();
