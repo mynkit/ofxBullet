@@ -20,6 +20,8 @@ subject to the following restrictions:
 #include "LinearMath/btTransform.h"
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include <iostream>
+using namespace std;
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -394,13 +396,14 @@ public:
     {
         roll = fmod(roll, 2.*M_PI);
         if (roll<0){roll+=2.*M_PI;}
-        if (roll>=5.*M_PI/3.){roll-=2.*M_PI;}
+        if (roll>=M_PI){roll-=2*M_PI;}
         pitch = fmod(pitch, 2.*M_PI);
         if (pitch<0){pitch+=2.*M_PI;}
-        if (pitch>=5.*M_PI/3.){pitch-=2.*M_PI;}
+        if (pitch>=M_PI){pitch-=2*M_PI;}
         yaw = fmod(yaw, 2.*M_PI);
         if (yaw<0){yaw+=2.*M_PI;}
-        if (yaw>=5.*M_PI/3.){yaw-=2.*M_PI;}
+        if (yaw>=M_PI){yaw-=2*M_PI;}
+//        cout << "yaw: " << yaw << endl;
         
         btQuaternion q = m_worldTransform.getRotation();
         m_worldTransform.setRotation(q+btQuaternion(
